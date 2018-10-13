@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/smart-monkey/store"
+	"github.com/mauricioabreu/smart-monkey/store"
 )
 
 func main() {
