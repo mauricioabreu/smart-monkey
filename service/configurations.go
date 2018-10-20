@@ -26,15 +26,17 @@ func (s *ConfigurationService) RetrieveConfiguration(key string) (*store.Configu
 }
 
 // Install : Deploy a configuration for the given key
-func (s *ConfigurationService) Install(key string) {
+func (s *ConfigurationService) Install(key string) error {
 	// Retrieve it from the storage
 	configuration, err := s.RetrieveConfiguration(key)
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		return err
 	}
 	log.Printf("Configuration %s found: %v\n", key, configuration)
 	// Write in on the disk
 	writeConfiguration(fmt.Sprintf("/tmp/%s.conf", key), configuration.Template)
+	return nil
 }
 
 func writeConfiguration(destination string, content string) {
