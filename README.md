@@ -22,6 +22,12 @@ To run this program, you first need to run a docker image with a RabbitMQ up and
 docker run -d --hostname smart-monkey --name smart-monkey -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 15672:15672 rabbitmq:3
 ```
 
+Now start the container:
+
+```
+docker start smart-monkey
+```
+
 It runs a docker container with a RabbitMQ, ready to be used.
 
 You will want to run the administrative interface.
