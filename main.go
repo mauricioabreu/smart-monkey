@@ -54,7 +54,9 @@ func installHandler(deliveries <-chan amqp.Delivery, done chan error) {
 	// Insert a new configuration in the storage
 	key := "1"
 	template := "foo"
-	repository.StoreConfiguration(&store.Configuration{Key: key, Template: template})
+	digest := "acbd18db4cc2f85cedef654fccc4a4d8"
+
+	repository.StoreConfiguration(&store.Configuration{Key: key, Template: template, Digest: digest})
 
 	configurationService := service.InitService(repository)
 

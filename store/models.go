@@ -4,4 +4,5 @@ package store
 type Configuration struct {
 	Key      string `json:"key"`
 	Template string `json:"template"`
+	Digest   string `json:"digest"`
 }
