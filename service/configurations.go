@@ -69,6 +69,7 @@ func writeConfiguration(destination string, content string) {
 	log.Printf("Wrote %d bytes on %s", byteSize, destination)
 }
 
+// Compute MD5 checksum of file
 func md5HashFromFile(filePath string) (string, error) {
 	var md5Hash string
 
@@ -92,6 +93,7 @@ func md5HashFromFile(filePath string) (string, error) {
 	return md5Hash, nil
 }
 
+// Compare the MD5 checksum digest of a file with another digest
 func compareDigest(filePath string, digest string) bool {
 	md5Hash, err := md5HashFromFile(filePath)
 	if err != nil {
