@@ -19,13 +19,13 @@ All configuration data is stored in a `storage backend`, serving as `source trut
 To run this program, you first need to run a docker image with a RabbitMQ up and running.
 
 ```
-docker run -d --hostname smart-monkey --name smart-monkey -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 15672:15672 rabbitmq:3
+docker run -d --hostname smart-monkey-rabbitmq --name smart-monkey-rabbitmq -p 4369:4369 -p 5671:5671 -p 5672:5672 -p 15672:15672 rabbitmq:3
 ```
 
 Now start the container:
 
 ```
-docker start smart-monkey
+docker start smart-monkey-rabbitmq
 ```
 
 It runs a docker container with a RabbitMQ, ready to be used.
@@ -33,7 +33,7 @@ It runs a docker container with a RabbitMQ, ready to be used.
 You will want to run the administrative interface.
 
 ```
-docker exec smart-monkey rabbitmq-plugins enable rabbitmq_management
+docker exec smart-monkey-rabbitmq rabbitmq-plugins enable rabbitmq_management
 ```
 
 To start the program, execute the main handler:
