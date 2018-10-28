@@ -1,0 +1,42 @@
+version: '3'
+services:
+  
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    hostname: "rabbitmq"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+      RABBITMQ_DEFAULT_HOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
+    volumes:
+      - "./rabbitmq_enabled_plugins:/etcd/rabbitmq/enabled_plugins"
+  ectd:
+    image: "quay.io/coreos/etcd"
+    ports:
+      - "2379:2379"
+    volumes:
+      - etcd:/etcd_data
+    command:
+      - /usr/local/bin/etcd
+      - -name
+      - etcd
+      - --data-dir
+      - /etcd_data
+      - -advertise-client-urls
+      - http://127.0.0.1:2379
+      - -listen-client-urls
+      - http://0.0.0.0:2379
+      - -initial-advertise-peer-urls
+      - http://127.0.0.1:2380
+      - -listen-peer-urls
+      - http://0.0.0.0:2380
+      - -initial-cluster
+      - etcd=http://127.0.0.1:2380
+
+volumes:
+  etcd:
