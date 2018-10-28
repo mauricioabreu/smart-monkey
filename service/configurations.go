@@ -7,19 +7,22 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/mauricioabreu/smart-monkey/store"
 )
 
 // ConfigurationService : handle configuration deploy
 type ConfigurationService struct {
-	store store.Store
+	store      store.Store
+	backupPath string
 }
 
 // InitService : service to execute actions on configurations
 func InitService(s store.Store) *ConfigurationService {
 	return &ConfigurationService{
-		store: s,
+		store:      s,
+		backupPath: "/tmp/backup/",
 	}
 }
 
@@ -45,6 +48,12 @@ func (s *ConfigurationService) Install(key string) error {
 		if compareDigest(filePath, configuration.Digest) == true {
 			log.Printf("Files are equal. File %s matches the digest %s", filePath, configuration.Digest)
 			return nil
+		} else {
+			_, err := backupFile(filePath, s.backupPath)
+			if err != nil {
+				log.Panic(err)
+			}
+			log.Printf("File was changed. Creating a backup file for %s on %s", filePath, s.backupPath)
 		}
 	}
 	log.Printf("File %s is outdated. Copying...", filePath)
@@ -77,7 +86,6 @@ func md5HashFromFile(filePath string) (string, error) {
 	if err != nil {
 		return md5Hash, err
 	}
-
 	defer file.Close()
 
 	hash := md5.New()
@@ -100,4 +108,30 @@ func compareDigest(filePath string, digest string) bool {
 		log.Fatal(err)
 	}
 	return md5Hash == digest
+}
+
+// Make a copy of the file and move it to the backup path
+// If the destination path does not exist, it is automatically created
+func backupFile(filePath, backupPath string) (int64, error) {
+	source, err := os.Open(filePath)
+	if err != nil {
+		return 0, err
+	}
+	defer source.Close()
+
+	fileName := getFileName(filePath)
+	destination, err := os.Create(backupPath + fileName)
+	if err != nil {
+		return 0, err
+	}
+	defer destination.Close()
+
+	writtenBytes, err := io.Copy(destination, source)
+	return writtenBytes, err
+}
+
+// Given a file path like /tmp/foo/bar.txt, return bar.txt
+func getFileName(filePath string) string {
+	words := strings.Split(filePath, "/")
+	return words[len(words)-1]
 }
