@@ -2,6 +2,27 @@
 
 
 [[projects]]
+  digest = "1:0fdd914047dbef02bff1e6543822869764757450aa6326ce12f3b396167a3252"
+  name = "github.com/coreos/etcd"
+  packages = [
+    "pkg/pathutil",
+    "pkg/srv",
+    "pkg/types",
+    "version",
+  ]
+  pruneopts = "UT"
+  revision = "27fc7e2296f506182f58ce846e48f36b34fe6842"
+  version = "v3.3.10"
+
+[[projects]]
+  digest = "1:0ef770954bca104ee99b3b6b7f9b240605ac03517d9f98cbc1893daa03f3c038"
+  name = "github.com/coreos/go-semver"
+  packages = ["semver"]
+  pruneopts = "UT"
+  revision = "8ab6407b697782a06568d4b7f1db25550ec2e4c6"
+  version = "v0.2.0"
+
+[[projects]]
   branch = "master"
   digest = "1:0c088044c1c1ee83e723692442df4fec9b3f2e57f7a99773485c97adfbc31695"
   name = "github.com/streadway/amqp"
@@ -9,9 +30,28 @@
   pruneopts = "UT"
   revision = "70e15c650864f4fc47f5d3c82ea117285480895d"
 
+[[projects]]
+  digest = "1:03aa6e485e528acb119fb32901cf99582c380225fc7d5a02758e08b180cb56c3"
+  name = "github.com/ugorji/go"
+  packages = ["codec"]
+  pruneopts = "UT"
+  revision = "b4c50a2b199d93b13dc15e78929cfb23bfdf21ab"
+  version = "v1.1.1"
+
+[[projects]]
+  digest = "1:968f9ee97c521616063a582e791c27124bef68b8135a38fae96bc01f300631e4"
+  name = "go.etcd.io/etcd"
+  packages = ["client"]
+  pruneopts = "UT"
+  revision = "27fc7e2296f506182f58ce846e48f36b34fe6842"
+  version = "v3.3.10"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/streadway/amqp"]
+  input-imports = [
+    "github.com/streadway/amqp",
+    "go.etcd.io/etcd/client",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
